@@ -1,4 +1,4 @@
-import { Component } from "@/components/mainChart/Chart";
+import { Component } from '@/components/mainChart/Chart'
 
 export default function Home() {
   return (
@@ -6,5 +6,5 @@ export default function Home() {
       DRY - Weight tracker for geeks
       <Component />
     </div>
-  );
+  )
 }
