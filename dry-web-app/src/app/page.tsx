@@ -3,12 +3,14 @@
 import { ZoomableChart } from '@/components/mainChart/Chart'
 import { DataPoint } from '@/types'
 import { parseCSV } from '@/utils/importCSV'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 export default function Home() {
   // const data = simulateData()
   // const data = simulateDataResult
   const [data, setData] = useState<DataPoint[]>([])
+  const { data: session } = useSession()
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -27,7 +29,19 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-start sm:justify-start md:justify-center p-4 sm:p-8 md:p-12 lg:p-24">
       <div className="flex justify-center w-full">
-        <input type="file" accept=".csv" onChange={handleFileChange} />
+        <div className="flex flex-col items-start gap-2">
+          {session ? (
+            <>
+              Signed in as {session?.user?.email} <br />
+              <button onClick={() => signOut()}>Sign out</button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => signIn('google')}>Sign in</button>
+            </>
+          )}
+          <input type="file" accept=".csv" onChange={handleFileChange} />
+        </div>
         <div className="flex flex-col items-center max-w-[1500px] w-full">
           <div className="flex flex-col lg:flex-row items-center w-full">
             <div className="w-full lg:w-full h-[500px] sm:h-[400px] md:h-[700px] hidden lg:block">

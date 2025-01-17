@@ -89,6 +89,7 @@ export function RegisterForm({
           </form>
           <div className="relative hidden bg-muted md:block">
             <Image
+              width="400"
               src="/dry2.webp"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover"
