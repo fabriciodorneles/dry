@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weight Tracking App
 
-## Getting Started
+A web-based fitness tracking application that helps users monitor and visualize their weight progress over time.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Google OAuth authentication
+- CSV file import for weight data
+- Interactive weight tracking charts
+- Dark/light theme support
+- Responsive design
+- User dashboard
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Frontend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js 15](https://nextjs.org/) - React framework
+- [React 19](https://react.dev/) - UI library
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [shadcn/ui](https://ui.shadcn.com/) - UI components
+- [Recharts](https://recharts.org/) - Charting library
+- [next-themes](https://github.com/pacocoursey/next-themes) - Theme management
 
-## Learn More
+### Backend
 
-To learn more about Next.js, take a look at the following resources:
+- [NextAuth.js](https://next-auth.js.org/) - Authentication
+- [Prisma](https://www.prisma.io/) - Database ORM
+- [SQLite](https://www.sqlite.org/) - Database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Others
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [date-fns](https://date-fns.org/) - Date manipulation
+- [Papa Parse](https://www.papaparse.com/) - CSV parsing
+- [Zod](https://zod.dev/) - Schema validation
