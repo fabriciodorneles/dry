@@ -24,7 +24,6 @@ export async function POST(request: Request) {
       return new NextResponse('User not found', { status: 404 })
     }
 
-    // Create all weights in a single transaction
     await prisma.weight.createMany({
       data: weights.map((w) => ({
         date: new Date(w.date),
