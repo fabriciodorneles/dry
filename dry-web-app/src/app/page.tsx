@@ -76,15 +76,7 @@ export default function Home() {
       <div className="flex justify-center w-full">
         <div className="flex flex-col items-start gap-6 w-60 shrink-0 pr-4 pt-2">
           <UserNav />
-          <div className="w-full flex flex-col gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowImport(!showImport)}
-              className="w-full"
-            >
-              {showImport ? 'Hide Import' : 'Import Data'}
-            </Button>
+          <div className="w-full flex gap-2">
             {showImport && (
               <label className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring cursor-pointer">
                 <span className="flex items-center">Choose File</span>
@@ -96,6 +88,13 @@ export default function Home() {
                 />
               </label>
             )}
+            <Button
+              variant="outline"
+              onClick={() => setShowImport(!showImport)}
+              // className="w-full"
+            >
+              {showImport ? 'X' : 'Import Data'}
+            </Button>
           </div>
         </div>
         <div className="flex flex-col items-center max-w-[1500px] w-full">
