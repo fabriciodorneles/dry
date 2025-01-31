@@ -25,6 +25,7 @@ type DataPoint = {
 
 type ZoomableChartProps = {
   data?: DataPoint[]
+  isLoading?: boolean
 }
 
 const chartConfig = {
@@ -70,7 +71,10 @@ export function simulateData(
   return simulatedData
 }
 
-export function ZoomableChart({ data: initialData }: ZoomableChartProps) {
+export function ZoomableChart({
+  data: initialData,
+  isLoading,
+}: ZoomableChartProps) {
   const [minY, setMinY] = useState<number>(() =>
     Math.min(...(initialData || []).map((d) => d.weight)),
   )
@@ -227,121 +231,120 @@ export function ZoomableChart({ data: initialData }: ZoomableChartProps) {
 
   return (
     <Card className="w-full h-full">
-      {/* <CardHeader className="flex-col items-stretch space-y-0 border-b p-0 sm:flex-row hidden sm:flex">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Zoomable Chart Demo</CardTitle>
-        </div>
-        <div className="flex">
-          <div className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l bg-muted/10 sm:border-l sm:border-t-0 sm:px-8 sm:py-6">
-            <span className="text-xs text-muted-foreground">Events</span>
-            <span className="text-lg font-bold leading-none sm:text-3xl">
-              {total.toLocaleString()}
-            </span>
-          </div>
-        </div>
-      </CardHeader> */}
       <CardContent className="p-2 sm:p-6 h-full sm:h-[calc(95%)] pb-6">
-        <ChartContainer config={chartConfig} className="w-full h-full">
-          <div
-            className="h-full"
-            onWheel={handleZoom}
-            onTouchMove={handleZoom}
-            ref={chartRef}
-            style={{ touchAction: 'none' }}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart
-                data={zoomedData}
-                margin={{
-                  top: 10,
-                  right: 10,
-                  left: 0,
-                  bottom: 0,
-                }}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-              >
-                <defs>
-                  <linearGradient id="colorEvents" x1="0" y1="0" x2="0" y2="1">
-                    <stop
-                      offset="5%"
-                      stopColor={chartConfig.events.color}
-                      stopOpacity={0.8}
-                    />
-                    <stop
-                      offset="95%"
-                      stopColor={chartConfig.events.color}
-                      stopOpacity={0.1}
-                    />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid vertical={true} />
-                <XAxis
-                  dataKey="date"
-                  scale="time"
-                  type="number"
-                  domain={['dataMin', 'dataMax']}
-                  tickFormatter={formatXAxis}
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={4}
-                  minTickGap={16}
-                  style={{ fontSize: '10px', userSelect: 'none' }}
-                />
-                <YAxis
-                  domain={[minY, maxY]}
-                  tickLine={false}
-                  axisLine={false}
-                  style={{ fontSize: '10px', userSelect: 'none' }}
-                  width={30}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={
-                    <ChartTooltipContent
-                      className="w-[150px] sm:w-[200px] font-mono text-xs sm:text-sm"
-                      nameKey="weight"
-                      labelFormatter={(value, name) => {
-                        return new Date(name[0].payload.date).toLocaleString()
-                      }}
-                    />
-                  }
-                />
-                {/* <ChartLegend content={<ChartLegendContent />} /> */}
-                <Area
-                  key="area-weight"
-                  type="linear"
-                  dataKey="weight"
-                  stroke={chartConfig.events.color}
-                  fillOpacity={1}
-                  fill="url(#colorEvents)"
-                  isAnimationActive={false}
-                  // dot={<CustomDot />}
-                />
-                {refAreaLeft && refAreaRight && (
-                  <ReferenceArea
-                    x1={refAreaLeft}
-                    x2={refAreaRight}
-                    strokeOpacity={0.3}
-                    fill="hsl(var(--foreground))"
-                    fillOpacity={0.05}
-                  />
-                )}
-              </ComposedChart>
-            </ResponsiveContainer>
-            <div className="flex justify-end my-2 sm:mb-4">
-              <Button
-                variant="outline"
-                onClick={handleReset}
-                disabled={!startTime && !endTime}
-                className="text-xs sm:text-sm"
-              >
-                Reset Zoom
-              </Button>
+        <ChartContainer config={chartConfig} className="w-full h-full relative">
+          {isLoading ? (
+            <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-50">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-r-transparent" />
             </div>
-          </div>
+          ) : (
+            <div
+              className="h-full"
+              onWheel={handleZoom}
+              onTouchMove={handleZoom}
+              ref={chartRef}
+              style={{ touchAction: 'none' }}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart
+                  data={zoomedData}
+                  margin={{
+                    top: 10,
+                    right: 10,
+                    left: 0,
+                    bottom: 0,
+                  }}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  onMouseLeave={handleMouseUp}
+                >
+                  <defs>
+                    <linearGradient
+                      id="colorEvents"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop
+                        offset="5%"
+                        stopColor={chartConfig.events.color}
+                        stopOpacity={0.8}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor={chartConfig.events.color}
+                        stopOpacity={0.1}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid vertical={true} />
+                  <XAxis
+                    dataKey="date"
+                    scale="time"
+                    type="number"
+                    domain={['dataMin', 'dataMax']}
+                    tickFormatter={formatXAxis}
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={4}
+                    minTickGap={16}
+                    style={{ fontSize: '10px', userSelect: 'none' }}
+                  />
+                  <YAxis
+                    domain={[minY, maxY]}
+                    tickLine={false}
+                    axisLine={false}
+                    style={{ fontSize: '10px', userSelect: 'none' }}
+                    width={30}
+                  />
+                  <ChartTooltip
+                    cursor={false}
+                    content={
+                      <ChartTooltipContent
+                        className="w-[150px] sm:w-[200px] font-mono text-xs sm:text-sm"
+                        nameKey="weight"
+                        labelFormatter={(value, name) => {
+                          return new Date(name[0].payload.date).toLocaleString()
+                        }}
+                      />
+                    }
+                  />
+                  {/* <ChartLegend content={<ChartLegendContent />} /> */}
+                  <Area
+                    key="area-weight"
+                    type="linear"
+                    dataKey="weight"
+                    stroke={chartConfig.events.color}
+                    fillOpacity={1}
+                    fill="url(#colorEvents)"
+                    isAnimationActive={false}
+                    // dot={<CustomDot />}
+                  />
+                  {refAreaLeft && refAreaRight && (
+                    <ReferenceArea
+                      x1={refAreaLeft}
+                      x2={refAreaRight}
+                      strokeOpacity={0.3}
+                      fill="hsl(var(--foreground))"
+                      fillOpacity={0.05}
+                    />
+                  )}
+                </ComposedChart>
+              </ResponsiveContainer>
+              <div className="flex justify-end my-2 sm:mb-4">
+                <Button
+                  variant="outline"
+                  onClick={handleReset}
+                  disabled={!startTime && !endTime}
+                  className="text-xs sm:text-sm"
+                >
+                  Reset Zoom
+                </Button>
+              </div>
+            </div>
+          )}
         </ChartContainer>
       </CardContent>
     </Card>
