@@ -20,7 +20,7 @@ export default function FocusTrackerPage() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-[60vh] p-8 px-4">
-      <div className="flex flex-col lg:flex-row gap-8 w-full max-w-5xl">
+      <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl">
         <div className="flex-1 flex justify-center">
           <FocusTimer onSessionEnd={handleSessionEnd} />
         </div>
